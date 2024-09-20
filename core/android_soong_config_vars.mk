@@ -164,3 +164,12 @@ $(call soong_config_set,bootclasspath,release_package_profiling_module,$(RELEASE
 
 # Export target_board_platform to soong for hardware/google/graphics/common/libmemtrack:memtrack.$(TARGET_BOARD_PLATFORM)
 $(call soong_config_set,ANDROID,target_board_platform,$(TARGET_BOARD_PLATFORM))
+
+# Add sim_count, disable_rild_oem_hook, and use_aosp_rild flag for ril related modules
+$(call soong_config_set,ril,sim_count,$(SIM_COUNT))
+ifneq ($(DISABLE_RILD_OEM_HOOK), false)
+  $(call soong_config_set_bool,ril,disable_rild_oem_hook,true)
+endif
+ifneq ($(ENABLE_VENDOR_RIL_SERVICE), true)
+  $(call soong_config_set_bool,ril,use_aosp_rild,true)
+endif
